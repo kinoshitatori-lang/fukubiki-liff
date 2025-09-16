@@ -388,17 +388,24 @@
                 showMessage('LIFFブラウザでのみスキャン可能です。', 'error');
                 return;
             }
-            try {
-                const result = await liff.scanCodeV2();
-if (result && result.value) {
-    document.getElementById('qrInput').value = result.value;
-    addStamp(result.value);
-}
+           try {
+    const result = await liff.scanCodeV2();
+    let qrValue = '';
+    if (result) {
+        // value があれば使う。なければ text を使う
+        qrValue = result.value || result.text || '';
+    }
 
-            } catch (error) {
-                console.error('QR code scan failed:', error);
-                showMessage('QRコードスキャンに失敗しました。', 'error');
-            }
+    if (qrValue) {
+        document.getElementById('qrInput').value = qrValue;
+        addStamp(qrValue);
+    } else {
+        showMessage('QRコードの読み取りに失敗しました。', 'error');
+    }
+} catch (error) {
+    console.error('QR code scan failed:', error);
+    showMessage('QRコードスキャンに失敗しました。', 'error');
+}
         });
 
         document.getElementById('exchange2').addEventListener('click', () => exchangeVoucher(1));
