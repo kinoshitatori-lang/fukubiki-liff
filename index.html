@@ -389,11 +389,12 @@
                 return;
             }
             try {
-                const result = await liff.scanCode();
-                if (result.value) {
-                    document.getElementById('qrInput').value = result.value;
-                    addStamp(result.value);
-                }
+                const result = await liff.scanCodeV2();
+if (result && result.value) {
+    document.getElementById('qrInput').value = result.value;
+    addStamp(result.value);
+}
+
             } catch (error) {
                 console.error('QR code scan failed:', error);
                 showMessage('QRコードスキャンに失敗しました。', 'error');
