@@ -1,3 +1,37 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>sample</title>
+  </head>
+  <body>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  </body>
+</html>
+
+liff
+  .init({
+    liffId: "XXXXX" // liffIdを指定。line://app/XXXXXの部分
+  })
+  .then(() => {
+    // 処理はここから
+  })
+  .catch((err) => {
+    // エラー処理
+    console.log(err.code, err.message);
+  });
+document.getElementById('qr_button').addEventListener('click', function() {
+    if (liff.isInClient()) {
+        liff.scanCode().then(result => {
+            document.getElementById('qr_text').textContent = result.value;
+        }).catch(err => {
+            document.getElementById('qr_text').textContent = err.message;
+        });
+    }
+});
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
