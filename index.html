@@ -6,202 +6,223 @@
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <meta http-equiv="Cache-Control" content="no-cache">
     <style>
-        body {
-            font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'Meiryo UI', 'メイリオ', Meiryo, 'MS PGothic', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #4a5568;
-            margin: 0;
-            font-size: 24px;
-        }
-        .user-info {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border-left: 4px solid #667eea;
-        }
-        .stamp-count {
-            font-size: 28px;
-            font-weight: bold;
-            color: #667eea;
-            text-align: center;
-            margin: 15px 0;
-        }
-        .qr-input {
-            margin-bottom: 25px;
-        }
-        .qr-input input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .qr-input input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: transform 0.2s;
-        }
-        .button:hover {
-            transform: translateY(-2px);
-        }
-        .button:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .exchange-section {
-            background: #fff5f5;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #f56565;
-        }
-        .exchange-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .exchange-btn {
-            flex: 1;
-            padding: 12px;
-            background: #f56565;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .exchange-btn:hover:not(:disabled) {
-            background: #e53e3e;
-        }
-        .exchange-btn:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-        }
-        .stamps-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .stamp-item {
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .stamp-item:last-child {
-            border-bottom: none;
-        }
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-        }
-        .message {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .message.success {
-            background: #f0fff4;
-            color: #22543d;
-            border: 1px solid #9ae6b4;
-        }
-        .message.error {
-            background: #fed7d7;
-            color: #742a2a;
-            border: 1px solid #feb2b2;
-        }
+        body {
+            font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'Meiryo UI', 'メイリオ', Meiryo, 'MS PGothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #4a5568;
+            margin: 0;
+            font-size: 24px;
+        }
+        .user-info {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+        .stamp-count {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .qr-input {
+            margin-bottom: 25px;
+        }
+        .qr-input input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .qr-input input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .exchange-section {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f56565;
+        }
+        .exchange-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .exchange-btn {
+            flex: 1;
+            padding: 12px;
+            background: #f56565;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .exchange-btn:hover:not(:disabled) {
+            background: #e53e3e;
+        }
+        .exchange-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        .stamps-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .stamp-item {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stamp-item:last-child {
+            border-bottom: none;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .message.success {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        .message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
     </style>
 </head>
 <body>
-    <h1>スタンプラリー</h1>
-    <p>🏷️ <span id="stampCount">0</span> 個</p>
-    <p>交換済み商品券: <span id="exchangedVouchers">0</span> 枚</p>
-    <p>2 → 1 交換</p>
-    <p>3 → 2 交換</p>
+    <div class="container">
+        <div class="header">
+            <h1>スタンプラリー</h1>
+        </div>
+        <div class="user-info">
+            <p>🏷️ スタンプ数: <span id="stampCount">0</span> 個</p>
+            <p>🎁 交換済み商品券: <span id="exchangedVouchers">0</span> 枚</p>
+        </div>
 
-    <button id="scanQrButton">📷 QRコードをスキャン</button>
+        <button id="scanQrButton" class="button">📷 QRコードをスキャン</button>
 
-    <p id="qrCodeData">QRコードの読み取り結果がここに表示されます。</p>
+        <p id="qrCodeData" style="text-align: center; color: #718096; font-size: 14px; margin-top: 20px;"></p>
+
+        <div class="exchange-section">
+            <h3>商品券と交換</h3>
+            <p style="font-size: 14px; color: #4a5568;">スタンプを貯めて商品券に交換しよう！</p>
+            <div class="exchange-buttons">
+                <button id="exchange2for1" class="exchange-btn" disabled>スタンプ2個 → 商品券1枚</button>
+                <button id="exchange3for2" class="exchange-btn" disabled>スタンプ3個 → 商品券2枚</button>
+            </div>
+        </div>
+
+        <h3>スタンプ獲得履歴</h3>
+        <div id="stampsList" class="stamps-list">
+            </div>
+    </div>
 
     <script>
         window.onload = function() {
-            const LIFF_ID = " 2008067578-By4EN4dJ ";
-            const GAS_WEB_APP_URL = " https://script.google.com/macros/s/AKfycbzd4eInt3_k5F0Ckhosy-fdDM8_WY8l17pHI7PO_ipmEm04lDtJqFc7Egebn7eQTb7Zqg/exec ";
+            // ★LIFF IDとGAS URLのスペースを削除しました
+            const LIFF_ID = "2008067578-By4EN4dJ";
+            const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzd4eInt3_k5F0Ckhosy-fdDM8_WY8l17pHI7PO_ipmEm04lDtJqFc7Egebn7eQTb7Zqg/exec";
 
+            let userId;
+
+            // LIFFアプリを初期化します
             liff.init({
                 liffId: LIFF_ID
             })
             .then(() => {
-                console.log("LIFF initialization successful.");
-                const scanButton = document.getElementById('scanQrButton');
-                if (scanButton) {
-                    scanButton.addEventListener('click', handleScan);
+                if (liff.isLoggedIn()) {
+                    userId = liff.getContext()?.userId;
+                    console.log("LIFF initialization successful. User ID:", userId);
+                    updateUserInfo();
                 } else {
-                    console.warn("Scan QR button not found. Please ensure your HTML has an element with id='scanQrButton'.");
+                    liff.login();
                 }
-                updateUserInfo();
             })
             .catch((err) => {
                 console.error('LIFF initialization failed:', err);
                 window.alert('LIFFアプリの初期化に失敗しました。LINE Developersコンソールの設定を確認してください。エラーコード: ' + (err.code || '不明') + ', メッセージ: ' + (err.message || '不明'));
             });
 
+            // QRコードスキャンボタンのイベントリスナー
+            const scanButton = document.getElementById('scanQrButton');
+            if (scanButton) {
+                scanButton.addEventListener('click', handleScan);
+            }
+
+            // 交換ボタンのイベントリスナー
+            document.getElementById('exchange2for1').addEventListener('click', () => exchangeVoucher(1, 2));
+            document.getElementById('exchange3for2').addEventListener('click', () => exchangeVoucher(2, 3));
+
             async function handleScan() {
                 try {
-                    console.log("Attempting to scan QR code...");
                     const result = await liff.scanCodeV2();
                     const scannedValue = result.value;
 
-                    const qrCodeDataElement = document.getElementById('qrCodeData');
-                    if (qrCodeDataElement) {
-                        qrCodeDataElement.textContent = `読み取ったQRコード: ${scannedValue}`;
-                    }
-
                     if (scannedValue) {
-                        console.log(`QRコードを読み取りました: ${scannedValue}`);
                         window.alert(`QRコードを読み取りました: ${scannedValue}\nスタンプ獲得処理を開始します...`);
-
-                        // 読み取り後、自動的にスタンプ獲得処理に接続
+                        document.getElementById('qrCodeData').textContent = `読み取ったQRコード: ${scannedValue}`;
                         await sendStampToGAS(scannedValue);
                     } else {
                         window.alert('QRコードが読み取れませんでした。もう一度お試しください。');
@@ -219,14 +240,13 @@
             }
 
             async function sendStampToGAS(qrCodeValue) {
-                // 関数の中身は変更なし
                 try {
-                    const userId = liff.getContext()?.userId || null;
-                    let userProfile = null;
-                    // ... (sendStampToGAS関数の残りのコード)
+                    const userProfile = await liff.getProfile().catch(() => ({ displayName: 'Unknown' }));
                     const response = await fetch(GAS_WEB_APP_URL, {
                         method: 'POST',
-                        // ...
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({
                             action: 'addStamp',
                             qrCode: qrCodeValue,
@@ -234,10 +254,11 @@
                             userProfile: userProfile
                         })
                     });
+
                     const gasResult = await response.json();
                     if (gasResult.success) {
                         window.alert('スタンプ獲得成功！');
-                        updateUserInfo(); // UIを更新
+                        updateUserInfo();
                     } else {
                         window.alert(`スタンプ獲得失敗: ${gasResult.message || '不明なエラー'}`);
                     }
@@ -248,7 +269,86 @@
             }
 
             async function updateUserInfo() {
-                // 関数の中身は変更なし
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'getUserInfo',
+                            userId: userId
+                        })
+                    });
+
+                    const gasResult = await response.json();
+                    if (gasResult.success && gasResult.user) {
+                        const stampCount = gasResult.user.totalStamps;
+                        document.getElementById('stampCount').textContent = stampCount;
+                        document.getElementById('exchangedVouchers').textContent = gasResult.user.exchangedVouchers;
+                        updateExchangeButtons(stampCount);
+                        displayStampsHistory(gasResult.stamps);
+                    } else {
+                        console.warn("Failed to fetch user info from GAS:", gasResult.message);
+                    }
+                } catch (error) {
+                    console.error("Error updating user info:", error);
+                    window.alert('ユーザー情報の取得中にエラーが発生しました。メッセージ: ' + error.message);
+                }
+            }
+            
+            async function exchangeVoucher(vouchersToExchange, requiredStamps) {
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'exchangeVoucher',
+                            userId: userId,
+                            vouchersToExchange: vouchersToExchange,
+                            requiredStamps: requiredStamps
+                        })
+                    });
+                    const gasResult = await response.json();
+                    if (gasResult.success) {
+                        window.alert(gasResult.message);
+                        updateUserInfo();
+                    } else {
+                        window.alert(gasResult.message);
+                    }
+                } catch (err) {
+                    console.error('商品券交換リクエストに失敗しました:', err);
+                    window.alert('商品券交換処理中にエラーが発生しました。メッセージ: ' + err.message);
+                }
+            }
+
+            function updateExchangeButtons(currentStamps) {
+                const exchange2for1Btn = document.getElementById('exchange2for1');
+                const exchange3for2Btn = document.getElementById('exchange3for2');
+
+                exchange2for1Btn.disabled = currentStamps < 2;
+                exchange3for2Btn.disabled = currentStamps < 3;
+            }
+
+            function displayStampsHistory(stamps) {
+                const list = document.getElementById('stampsList');
+                list.innerHTML = ''; // 既存のリストをクリア
+                if (stamps.length === 0) {
+                    list.innerHTML = '<p style="text-align: center; color: #718096;">スタンプはまだありません。</p>';
+                } else {
+                    stamps.reverse().forEach(stamp => {
+                        const date = new Date(stamp.date).toLocaleString('ja-JP');
+                        const item = document.createElement('div');
+                        item.className = 'stamp-item';
+                        item.innerHTML = `
+                            <span>${stamp.companyName}</span>
+                            <span>${date}</span>
+                        `;
+                        list.appendChild(item);
+                    });
+                }
             }
         };
     </script>
