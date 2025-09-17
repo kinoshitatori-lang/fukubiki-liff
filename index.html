@@ -1,18 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-　　<h1>スタンプラリー</h1>
-    <p>🏷️ <span id="stampCount">0</span> 個</p>
-    <p>交換済み商品券: <span id="exchangedVouchers">0</span> 枚</p>
-    <p>2 → 1 交換</p>
-    <p>3 → 2 交換</p>
-
-    <!-- QRコードスキャンボタンを追加します。既存の「📷 QRコードをスキャン」を置き換えるか、IDを付与します。 -->
-    <button id="scanQrButton">📷 QRコードをスキャン</button>
-    <!-- 読み取ったQRコードのデータを表示する場所 -->
-    <p id="qrCodeData">QRコードの読み取り結果がここに表示されます。</p>
-
-    <button>🏷️ スタンプ獲得</button> <!-- 既存のボタンはそのまま残します -->
-
     <script>
         // ここに後述のJavaScriptコードを記述します。
         window.onload = function() {
