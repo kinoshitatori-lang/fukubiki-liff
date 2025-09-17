@@ -6,7 +6,291 @@
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <meta http-equiv="Cache-Control" content="no-cache">
     <style>
-        /* スタイルは省略 */
+        body {
+
+            font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'Meiryo UI', 'メイリオ', Meiryo, 'MS PGothic', sans-serif;
+
+            margin: 0;
+
+            padding: 20px;
+
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            min-height: 100vh;
+
+            color: #333;
+
+        }
+
+        .container {
+
+            max-width: 400px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+        }
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+        .header h1 {
+
+            color: #4a5568;
+
+            margin: 0;
+
+            font-size: 24px;
+
+        }
+
+        .user-info {
+
+            background: #f7fafc;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            border-left: 4px solid #667eea;
+
+        }
+
+        .stamp-count {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #667eea;
+
+            text-align: center;
+
+            margin: 15px 0;
+
+        }
+
+        .qr-input {
+
+            margin-bottom: 25px;
+
+        }
+
+        .qr-input input {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 2px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            box-sizing: border-box;
+
+        }
+
+        .qr-input input:focus {
+
+            outline: none;
+
+            border-color: #667eea;
+
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+
+        }
+
+        .button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-bottom: 15px;
+
+            transition: transform 0.2s;
+
+        }
+
+        .button:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+        .button:disabled {
+
+            background: #cbd5e0;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+        .exchange-section {
+
+            background: #fff5f5;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            border-left: 4px solid #f56565;
+
+        }
+
+        .exchange-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        .exchange-btn {
+
+            flex: 1;
+
+            padding: 12px;
+
+            background: #f56565;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: background 0.2s;
+
+        }
+
+        .exchange-btn:hover:not(:disabled) {
+
+            background: #e53e3e;
+
+        }
+
+        .exchange-btn:disabled {
+
+            background: #cbd5e0;
+
+            cursor: not-allowed;
+
+        }
+
+        .stamps-list {
+
+            max-height: 200px;
+
+            overflow-y: auto;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+        }
+
+        .stamp-item {
+
+            padding: 10px;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        .stamp-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .loading {
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            color: #666;
+
+        }
+
+        .message {
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+        }
+
+        .message.success {
+
+            background: #f0fff4;
+
+            color: #22543d;
+
+            border: 1px solid #9ae6b4;
+
+        }
+
+        .message.error {
+
+            background: #fed7d7;
+
+            color: #742a2a;
+
+            border: 1px solid #feb2b2;
+
+        }
     </style>
 </head>
 <body>
