@@ -1,45 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-  </head>
-  <body>
-    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-  </body>
-</html>
-
-liff
-  .init({
-    liffId: "XXXXX" // liffIdを指定。line://app/XXXXXの部分
-  })
-  .then(() => {
-    // 処理はここから
-  })
-  .catch((err) => {
-    // エラー処理
-    console.log(err.code, err.message);
-  });
-document.getElementById('qr_button').addEventListener('click', function() {
-    if (liff.isInClient()) {
-        liff.scanCode().then(result => {
-            document.getElementById('qr_text').textContent = result.value;
-        }).catch(err => {
-            document.getElementById('qr_text').textContent = err.message;
-        });
-    }
-});
-
-<html lang="ja">
-<head>  // カメラ機能追加はじまり
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>QRコードリーダー</title>
-</head>
-    <body>
-        <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-        <script src="qrscan.js"></script>
-   // カメラ機能追加おわり
-  
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>デジタル福引券システム</title>
@@ -241,14 +202,13 @@ document.getElementById('qr_button').addEventListener('click', function() {
             <div style="margin-top: 30px;">
                 <h3 style="color: #4a5568;">獲得したスタンプ</h3>
                 <div id="stampsList" class="stamps-list">
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         const liffId = '2008067578-By4EN4dJ';
-        // ここにGoogle Apps Scriptのデプロイ済みウェブアプリURLを貼り付けてください
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbzd4eInt3_k5F0Ckhosy-fdDM8_WY8l17pHI7PO_ipmEm04lDtJqFc7Egebn7eQTb7Zqg/exec';
         
         let userId = '';
@@ -427,29 +387,27 @@ document.getElementById('qr_button').addEventListener('click', function() {
                 showMessage('LIFFブラウザでのみスキャン可能です。', 'error');
                 return;
             }
-           try {
-    const result = await liff.scanCodeV2();
-    let qrValue = '';
-    if (result) {
-        // value があれば使う。なければ text を使う
-        qrValue = result.value || result.text || '';
-    }
+            try {
+                const result = await liff.scanCodeV2();
+                let qrValue = '';
+                if (result) {
+                    qrValue = result.value || result.text || '';
+                }
 
-    if (qrValue) {
-        document.getElementById('qrInput').value = qrValue;
-        addStamp(qrValue);
-    } else {
-        showMessage('QRコードの読み取りに失敗しました。', 'error');
-    }
-} catch (error) {
-    console.error('QR code scan failed:', error);
-    showMessage('QRコードスキャンに失敗しました。', 'error');
-}
+                if (qrValue) {
+                    document.getElementById('qrInput').value = qrValue;
+                    addStamp(qrValue);
+                } else {
+                    showMessage('QRコードの読み取りに失敗しました。', 'error');
+                }
+            } catch (error) {
+                console.error('QR code scan failed:', error);
+                showMessage('QRコードスキャンに失敗しました。', 'error');
+            }
         });
 
         document.getElementById('exchange2').addEventListener('click', () => exchangeVoucher(1));
         document.getElementById('exchange3').addEventListener('click', () => exchangeVoucher(2));
-
     </script>
 </body>
 </html>
