@@ -11,9 +11,109 @@
 
     <button>🏷️ スタンプ獲得</button> <!-- 既存のボタンはそのまま残します -->
 
-    <!-- 以下のJavaScriptを<script>タグで直接記述するか、別のファイル（例: `main.js`）として読み込みます。 -->
     <script>
         // ここに後述のJavaScriptコードを記述します。
+        window.onload = function() {
+    // ⚠️ ここにあなたのLIFF IDを設定してください
+    const LIFF_ID = "2008067578-By4EN4dJ";
+    // ⚠️ ここにあなたのGAS Webアプリの公開URLを設定してください
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzd4eInt3_k5F0Ckhosy-fdDM8_WY8l17pHI7PO_ipmEm04lDtJqFc7Egebn7eQTb7Zqg/exec";
+
+    // LIFFアプリを初期化します
+    liff.init({
+        liffId: LIFF_ID
+    })
+    .then(() => {
+        console.log("LIFF initialization successful.");
+        // LIFFの初期化が成功したら、QRスキャンボタンにイベントリスナーを設定します。
+        const scanButton = document.getElementById('scanQrButton');
+        if (scanButton) {
+            scanButton.addEventListener('click', handleScan);
+        } else {
+            console.warn("Scan QR button not found. Please ensure your HTML has an element with id='scanQrButton'.");
+        }
+    })
+    .catch((err) => {
+        // LIFFの初期化に失敗した場合のエラーハンドリング [17, 18]
+        console.error('LIFF initialization failed:', err);
+        // デバッグ用にアラートを表示すると良いでしょう [13]
+        window.alert('LIFFアプリの初期化に失敗しました。LINE Developersコンソールの設定を確認してください。エラーコード: ' + (err.code || '不明') + ', メッセージ: ' + (err.message || '不明'));
+    });
+
+    /**
+     * QRコードスキャンボタンがクリックされたときの処理
+     */
+    async function handleScan() {
+        try {
+            console.log("Attempting to scan QR code...");
+            // liff.scanCodeV2() を呼び出してQRコードリーダーを起動します 
+            const result = await liff.scanCodeV2();
+            const scannedValue = result.value; // 読み取った文字列が 'value' プロパティに含まれます
+
+            const qrCodeDataElement = document.getElementById('qrCodeData');
+            if (qrCodeDataElement) {
+                qrCodeDataElement.textContent = `読み取ったQRコード: ${scannedValue}`; // UIに表示
+            }
+
+            if (scannedValue) {
+                console.log(`QRコードを読み取りました: ${scannedValue}`);
+                window.alert(`QRコードを読み取りました: ${scannedValue}\nスタンプ情報を確認します...`);
+
+                // 読み取ったQRコードの値とユーザーIDをGASに送信します
+                const userId = liff.getContext()?.userId || null; // ユーザーIDを取得してGASに渡す
+
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'collectStamp', // GASで処理を識別するためのアクション名
+                        qrCode: scannedValue,
+                        userId: userId
+                    })
+                });
+
+                const gasResult = await response.json();
+                console.log('GASからの応答:', gasResult);
+
+                if (gasResult.status === 'success') {
+                    window.alert('スタンプ獲得成功！');
+                    // GASからの応答（例: 最新のスタンプ数）でUIを更新します
+                    const stampCountElement = document.getElementById('stampCount');
+                    if (stampCountElement && gasResult.newStampCount !== undefined) {
+                        stampCountElement.textContent = gasResult.newStampCount;
+                    }
+                } else {
+                    window.alert(`スタンプ獲得失敗: ${gasResult.message || '不明なエラー'}`);
+                }
+
+                // 必要であれば、処理後にLIFFアプリを閉じます [15, 21]
+                // liff.closeWindow();
+
+            } else {
+                window.alert('QRコードが読み取れませんでした。もう一度お試しください。');
+            }
+
+        } catch (err) {
+            console.error('QR code scan failed:', err);
+            // エラーの種類に応じてユーザーに分かりやすいメッセージを表示 [2, 17]
+            let errorMessage = 'QRコードのスキャン中にエラーが発生しました。';
+            if (err.code === 'FORBIDDEN' || (err.message && err.message.includes('permission'))) { // [7, 22, 23]
+                errorMessage += 'LIFFアプリの設定（Scan QR ON、画面サイズFull）やLINEアプリのバージョンを確認してください。';
+            } else if (err.message) {
+                errorMessage += `メッセージ: ${err.message}`;
+            }
+            window.alert(errorMessage);
+        }
+    }
+
+    // 開発中のデバッグに役立つリロードボタンを追加する例 [13]
+    // const reloadButton = document.createElement('button');
+    // reloadButton.textContent = 'アプリをリロード';
+    // reloadButton.onclick = () => window.location.reload();
+    // document.body.appendChild(reloadButton);
+};
     </script>
 </body>
 </html>
